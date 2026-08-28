@@ -3,11 +3,11 @@ import { Container, PageHero, SectionHeading, Stat } from "@/components/ui";
 import { RevealGroup } from "@/components/motion";
 import { getCurrentTierSet, listTierSets } from "@/lib/queries/meta";
 import { t } from "@/lib/i18n";
-import { RankAscension } from "@/components/ranks/RankAscension";
-import { HowRankedWorks } from "@/components/ranks/HowRankedWorks";
-import { EpisodeStrip, type EpisodeStripSet } from "@/components/ranks/EpisodeStrip";
-import { rgbaHex, tierSetLabel, type LadderTier } from "@/components/ranks/types";
-import { SeeAlso } from "@/components/gamemodes/SeeAlso";
+import { RankAscension } from "@/features/ranks/RankAscension";
+import { HowRankedWorks } from "@/features/ranks/HowRankedWorks";
+import { EpisodeStrip, type EpisodeStripSet } from "@/features/ranks/EpisodeStrip";
+import { rgbaHex, tierSetLabel, type LadderTier } from "@/features/ranks/types";
+import { SeeAlso } from "@/components/ui/SeeAlso";
 
 export const revalidate = 3600;
 

@@ -5,7 +5,7 @@ import { SUPER_REGION_ORDER, superRegionColor, type ProjectedCallout } from "@/l
 import { CalloutList } from "./CalloutList";
 import { Minimap2D } from "./Minimap2D";
 import TacticalMapScene from "./TacticalMapScene.lazy";
-import { useMediaQuery, useWebGL } from "./useMedia";
+import { useMediaQuery, useWebGL } from "@/hooks";
 
 type Mode = "3d" | "2d";
 

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { PageHero, Stat } from "@/components/ui";
-import SkinFieldScene from "@/components/skins/SkinFieldScene.lazy";
-import { SkinBrowser, type BrowserSkin, type WeaponOption } from "@/components/skins/SkinBrowser";
-import { hexColor, type TierInfo } from "@/components/skins/tier";
+import SkinFieldScene from "@/features/skins/SkinFieldScene.lazy";
+import { SkinBrowser, type BrowserSkin, type WeaponOption } from "@/features/skins/SkinBrowser";
+import { hexColor, type TierInfo } from "@/features/skins/tier";
 import { t } from "@/lib/i18n";
 import { listBrowsableSkins, listContentTiers, listWeaponsWithSkinCounts } from "@/lib/queries/skins";
 

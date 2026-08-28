@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { BundleGrid } from "@/components/bundles/BundleGrid";
-import type { BundleCardData } from "@/components/bundles/BundleCard";
+import { BundleGrid } from "@/features/bundles/BundleGrid";
+import type { BundleCardData } from "@/features/bundles/BundleCard";
 import { PageHero, Stat } from "@/components/ui";
 import { t } from "@/lib/i18n";
 import { listBundles } from "@/lib/queries/skins";

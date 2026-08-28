@@ -7,7 +7,7 @@ import { useEffect, useMemo, useRef, type ComponentRef, type RefObject } from "r
 import { AdditiveBlending, SRGBColorSpace, Vector3, type Mesh, type MeshBasicMaterial } from "three";
 import { SceneCanvas } from "@/components/three/SceneCanvas";
 import { superRegionColor, type ProjectedCallout } from "@/lib/minimap";
-import { useReducedMotion } from "./useMedia";
+import { useReducedMotion } from "@/hooks";
 
 export type TacticalMapSceneProps = {
   icon: string;

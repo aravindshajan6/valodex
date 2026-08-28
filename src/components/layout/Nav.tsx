@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useSyncExternalStore } from "react";
-import { NAV_LINKS } from "./links";
+import { NAV_LINKS } from "@/config/site";
 
 function subscribeScroll(cb: () => void) {
   window.addEventListener("scroll", cb, { passive: true });

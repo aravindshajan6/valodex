@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Container, PageHero, Stat } from "@/components/ui";
-import { AgentGrid } from "@/components/agents/AgentGrid";
-import type { AgentCardData, RoleOption } from "@/components/agents/types";
+import { AgentGrid } from "@/features/agents/AgentGrid";
+import type { AgentCardData, RoleOption } from "@/features/agents/types";
 import { listAgentRoles, listPlayableAgents } from "@/lib/queries/agents";
 import { t } from "@/lib/i18n";
 

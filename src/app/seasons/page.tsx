@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { Badge, Container, PageHero, SectionHeading } from "@/components/ui";
 import { RevealGroup } from "@/components/motion";
 import { getSyncState, listEvents, listSeasons } from "@/lib/queries/meta";
-import { buildTimeline } from "@/components/seasons/build";
-import { SeasonTimeline } from "@/components/seasons/SeasonTimeline";
-import { LiveActPanel } from "@/components/seasons/LiveActPanel";
-import { SeeAlso } from "@/components/gamemodes/SeeAlso";
+import { buildTimeline } from "@/features/seasons/build";
+import { SeasonTimeline } from "@/features/seasons/SeasonTimeline";
+import { LiveActPanel } from "@/features/seasons/LiveActPanel";
+import { SeeAlso } from "@/components/ui/SeeAlso";
 
 export const revalidate = 3600;
 

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { NAV_LINKS } from "./links";
+import { NAV_LINKS, SITE } from "@/config/site";
 
 export function Footer() {
   return (
@@ -9,7 +9,7 @@ export function Footer() {
           <div className="display text-3xl">Valo<span className="text-red">rum</span></div>
           <p className="mt-3 max-w-md text-sm text-bone-2">
             A codex for Valorant built on live game data from{" "}
-            <a href="https://valorant-api.com" className="text-bone underline decoration-line hover:decoration-red" target="_blank" rel="noreferrer">valorant-api.com</a>.
+            <a href={SITE.source.href} className="text-bone underline decoration-line hover:decoration-red" target="_blank" rel="noreferrer">{SITE.source.label}</a>.
           </p>
           <p className="mt-4 text-xs text-mute max-w-md">
             Valorum isn&apos;t endorsed by Riot Games and doesn&apos;t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games and all associated properties are trademarks or registered trademarks of Riot Games, Inc.

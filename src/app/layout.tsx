@@ -3,15 +3,16 @@ import { Anton, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
+import { SITE } from "@/config/site";
 
 const anton = Anton({ weight: "400", subsets: ["latin"], variable: "--font-anton", display: "swap" });
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains", display: "swap" });
 
 export const metadata: Metadata = {
-  title: { default: "Valorum", template: "%s — Valorum" },
-  description: "The Valorant codex: agents, weapons, maps, skins, ranks and tools — built on live game data.",
-  metadataBase: new URL("http://localhost:3000"),
+  title: { default: SITE.name, template: `%s — ${SITE.name}` },
+  description: SITE.description,
+  metadataBase: new URL(SITE.url),
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

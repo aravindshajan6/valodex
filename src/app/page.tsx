@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { Badge, Container, Panel, SectionHeading, Stat } from "@/components/ui";
 import { Magnetic, RevealGroup } from "@/components/motion";
-import HeroScene from "@/components/home/HeroScene.lazy";
-import { HeroTitle } from "@/components/home/HeroTitle";
-import { Ticker } from "@/components/home/Ticker";
-import { AgentRail, type RailAgent } from "@/components/home/AgentRail";
-import { WeaponGrid, type TeaserWeapon } from "@/components/home/WeaponGrid";
-import { MapGrid, type TeaserMap } from "@/components/home/MapGrid";
-import { SkinShowcase, type ShowcaseSkin } from "@/components/home/SkinShowcase";
+import HeroScene from "@/features/home/HeroScene.lazy";
+import { HeroTitle } from "@/features/home/HeroTitle";
+import { Ticker } from "@/features/home/Ticker";
+import { AgentRail, type RailAgent } from "@/features/home/AgentRail";
+import { WeaponGrid, type TeaserWeapon } from "@/features/home/WeaponGrid";
+import { MapGrid, type TeaserMap } from "@/features/home/MapGrid";
+import { SkinShowcase, type ShowcaseSkin } from "@/features/home/SkinShowcase";
 import { getHomeMeta, getHomeStats, listHomeAgents, listHomeMaps, listMarqueeWeapons, listShowcaseSkins } from "@/lib/queries/home";
 import { t } from "@/lib/i18n";
 

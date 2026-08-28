@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Container, PageHero, Stat } from "@/components/ui";
 import { listGamemodes } from "@/lib/queries/meta";
 import { t } from "@/lib/i18n";
-import { GamemodeGrid } from "@/components/gamemodes/GamemodeGrid";
-import { classify, humanizeEnum, type GamemodeCard } from "@/components/gamemodes/format";
-import { SeeAlso } from "@/components/gamemodes/SeeAlso";
+import { GamemodeGrid } from "@/features/gamemodes/GamemodeGrid";
+import { classify, humanizeEnum, type GamemodeCard } from "@/features/gamemodes/format";
+import { SeeAlso } from "@/components/ui/SeeAlso";
 
 export const revalidate = 3600;
 

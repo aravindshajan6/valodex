@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Container, PageHero, Stat } from "@/components/ui";
 import { RevealGroup } from "@/components/motion";
-import { MapGrid } from "@/components/maps/MapGrid";
-import type { MapCardData } from "@/components/maps/MapCard";
+import { MapGrid } from "@/features/maps/MapGrid";
+import type { MapCardData } from "@/features/maps/MapCard";
 import { t } from "@/lib/i18n";
 import { listMaps } from "@/lib/queries/maps";
 

@@ -6,7 +6,7 @@ import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { SceneCanvas } from "@/components/three/SceneCanvas";
-import { useInView, useReducedMotion } from "./useReducedMotion";
+import { useInView, useReducedMotion } from "@/hooks";
 
 /**
  * Skin detail hero: the chroma render as a texture on a plane floating over a

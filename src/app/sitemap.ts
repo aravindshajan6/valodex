@@ -3,7 +3,9 @@ import { db } from "@/db/client";
 import { agents, bundles, maps, weaponSkins, weapons } from "@/db/schema";
 import { eq, isNotNull } from "drizzle-orm";
 
-const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+import { NAV_LINKS, SITE } from "@/config/site";
+
+const BASE = SITE.url;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [a, w, m, b, s] = await Promise.all([
@@ -20,7 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const url = (p: string, priority = 0.6): MetadataRoute.Sitemap[number] => ({ url: `${BASE}${p}`, changeFrequency: "weekly", priority });
   return [
     url("/", 1),
-    ...["/agents", "/weapons", "/maps", "/skins", "/bundles", "/ranks", "/seasons", "/gamemodes", "/tools/ttk"].map((p) => url(p, 0.9)),
+    ...NAV_LINKS.map((l) => url(l.href, 0.9)),
     ...a.map((r) => url(`/agents/${r.slug}`, 0.8)),
     ...w.map((r) => url(`/weapons/${r.slug}`, 0.8)),
     ...m.map((r) => url(`/maps/${r.slug}`, 0.7)),

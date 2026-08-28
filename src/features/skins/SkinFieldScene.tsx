@@ -5,7 +5,7 @@ import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
 import { SceneCanvas } from "@/components/three/SceneCanvas";
-import { useInView, useReducedMotion } from "./useReducedMotion";
+import { useInView, useReducedMotion } from "@/hooks";
 
 /**
  * /skins hero background: a slow drifting field of translucent chamfered "card"

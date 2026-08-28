@@ -1,11 +1,11 @@
 /** Shared, framework-free helpers for content tiers (safe in server and client code). */
 
+import { rgbaHex } from "@/lib/color";
+
 export type TierInfo = { devName: string; name: string; rank: number; color: string; icon: string | null };
 
 /** `"fad66333"` (RGBA hex, no `#`) -> `"#fad663"`. */
-export function hexColor(rgba: string | null | undefined, fallback = "#41e0c2"): string {
-  return rgba && rgba.length >= 6 ? `#${rgba.slice(0, 6)}` : fallback;
-}
+export const hexColor = (rgba: string | null | undefined, fallback = "#41e0c2") => rgbaHex(rgba, fallback);
 
 /** Tiers that get the sparkle treatment in the 3D showcase. */
 export const SPARKLE_TIERS = new Set(["Exclusive", "Ultra"]);
