@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- upstream records are intentionally loose; the DB `raw` column keeps them whole */
-import "dotenv/config";
 import { sql } from "drizzle-orm";
 import { db } from "@/db/client";
 import * as s from "@/db/schema";
@@ -7,8 +6,26 @@ import { normalizeEnum, uniqueSlugs } from "@/lib/slug";
 import { api } from "./api";
 
 type Row = Record<string, any>;
-const force = process.argv.includes("--force");
-const only = process.argv.find((a) => a.startsWith("--only="))?.slice(7)?.split(",");
+
+export type SyncStep = { label: string; rows: number; ms: number };
+
+export type SyncOptions = {
+  /** Re-run even when the upstream manifest is unchanged. */
+  force?: boolean;
+  /** Restrict to specific steps, e.g. `["weapons", "maps"]`. Skips the manifest bookkeeping. */
+  only?: string[];
+  /** Progress sink. Defaults to a no-op; the CLI passes `console.log`. */
+  log?: (line: string) => void;
+};
+
+export type SyncResult = {
+  status: "synced" | "skipped";
+  /** Upstream build the data now reflects. */
+  version: { manifestId: string; version: string; branch: string; buildDate: string };
+  steps: SyncStep[];
+  rows: number;
+  ms: number;
+};
 
 const date = (v: string | null | undefined) => {
   if (!v) return null;
@@ -17,14 +34,6 @@ const date = (v: string | null | undefined) => {
   return Number.isNaN(d.getTime()) || d.getUTCFullYear() < 1980 ? null : d;
 };
 const en = (loc: Row | null | undefined) => (loc?.["en-US"] as string | undefined) ?? "";
-
-/** Full replace inside a transaction: parent-child tables are wiped and re-inserted atomically. */
-async function replace(label: string, fn: () => Promise<number>) {
-  if (only && !only.includes(label)) return;
-  const t0 = Date.now();
-  const n = await fn();
-  console.log(`  ${label.padEnd(18)} ${String(n).padStart(5)} rows  ${Date.now() - t0}ms`);
-}
 
 async function syncAgents() {
   const data = await api.list("agents");
@@ -256,15 +265,37 @@ async function syncMisc() {
   });
 }
 
-async function main() {
+/**
+ * Pull the whole valorant-api.com catalogue into Postgres.
+ *
+ * Version-gated: if the upstream `manifestId` matches what we last stored, this
+ * returns `{ status: "skipped" }` without touching the database. Each step is a
+ * full replace inside its own transaction, so a failure leaves the previous
+ * contents of the tables it did not reach intact.
+ */
+export async function runSync({ force = false, only, log = () => {} }: SyncOptions = {}): Promise<SyncResult> {
+  const started = Date.now();
+  const steps: SyncStep[] = [];
+
+  const replace = async (label: string, fn: () => Promise<number>) => {
+    if (only && !only.includes(label)) return;
+    const t0 = Date.now();
+    const rows = await fn();
+    const ms = Date.now() - t0;
+    steps.push({ label, rows, ms });
+    log(`  ${label.padEnd(18)} ${String(rows).padStart(5)} rows  ${ms}ms`);
+  };
+
   const version = await api.version();
   const [state] = await db.select().from(s.syncState).limit(1);
-  console.log(`upstream ${version.branch} (${version.version}) manifest ${version.manifestId}`);
+  log(`upstream ${version.branch} (${version.version}) manifest ${version.manifestId}`);
+
   if (state && state.manifestId === version.manifestId && !force && !only) {
-    console.log(`already synced at ${state.syncedAt.toISOString()} — pass --force to re-run`);
-    return;
+    log(`already synced at ${state.syncedAt.toISOString()} — pass --force to re-run`);
+    return { status: "skipped", version, steps, rows: 0, ms: Date.now() - started };
   }
-  console.log("syncing...");
+
+  log("syncing...");
   await replace("agents", syncAgents);
   await replace("cosmetic-lookups", syncCosmeticLookups);
   await replace("weapons", syncWeapons);
@@ -273,15 +304,17 @@ async function main() {
   await replace("seasons", syncSeasons);
   await replace("cosmetics", syncCosmetics);
   await replace("misc", syncMisc);
+
+  // `--only` runs are partial, so they must not claim the manifest is fully synced.
   if (!only) {
+    const row = { manifestId: version.manifestId, version: version.version, branch: version.branch, buildDate: date(version.buildDate) };
     await db
       .insert(s.syncState)
-      .values({ id: 1, manifestId: version.manifestId, version: version.version, branch: version.branch, buildDate: date(version.buildDate) })
-      .onConflictDoUpdate({ target: s.syncState.id, set: { manifestId: version.manifestId, version: version.version, branch: version.branch, buildDate: date(version.buildDate), syncedAt: sql`now()` } });
+      .values({ id: 1, ...row })
+      .onConflictDoUpdate({ target: s.syncState.id, set: { ...row, syncedAt: sql`now()` } });
   }
-  console.log("done");
-}
 
-main()
-  .then(() => process.exit(0))
-  .catch((err) => { console.error(err); process.exit(1); });
+  const result: SyncResult = { status: "synced", version, steps, rows: steps.reduce((n, x) => n + x.rows, 0), ms: Date.now() - started };
+  log(`done in ${result.ms}ms`);
+  return result;
+}

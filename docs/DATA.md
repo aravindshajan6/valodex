@@ -4,8 +4,35 @@ Everything comes from [valorant-api.com](https://valorant-api.com) — the game'
 catalogue. **It has no player, match, rank or leaderboard data**; player-facing stats would
 need Riot's production API or an unofficial service.
 
-Synced with `npm run sync` (version-gated on the upstream `manifestId`; `--force` to re-run,
-`--only=weapons,maps` for a subset). ~15 MB, about 6 seconds.
+## Keeping it fresh
+
+Riot ships a patch every few weeks; without a re-sync the site silently serves stale data.
+
+**By hand:** `npm run sync` (version-gated on the upstream `manifestId`, so it is a no-op
+when nothing changed; `-- --force` to re-run anyway, `-- --only=weapons,maps` for a subset).
+~15 MB, about 7 seconds.
+
+**On a schedule:** `GET|POST /api/sync`, guarded by `SYNC_SECRET`. It runs the same
+`runSync()` the CLI does, then calls `revalidatePath("/", "layout")` so ISR pages pick the
+new data up immediately instead of waiting out their hour.
+
+```bash
+curl -H "Authorization: Bearer $SYNC_SECRET" https://<host>/api/sync
+# ?force=1        re-run even when the manifest is unchanged
+# ?only=maps,weapons   partial re-run (skips the manifest bookkeeping)
+```
+
+The endpoint **fails closed**: with `SYNC_SECRET` unset it returns 503 rather than running,
+and a wrong or missing token is a 401 (compared with `timingSafeEqual`).
+
+Schedulers, pick one:
+- **Vercel Cron** — `vercel.json` already declares `/api/sync` every 6 hours. Set `SYNC_SECRET`
+  in the project's env; Vercel sends it as `Authorization: Bearer`.
+- **Any host with cron** — `0 */6 * * * curl -fsS -H "Authorization: Bearer $SYNC_SECRET" https://<host>/api/sync`
+- **GitHub Actions** — a `schedule:` workflow running the same curl with a repo secret.
+
+A sync is a full replace per step, each in its own transaction, so a mid-run failure leaves
+every table it did not reach untouched.
 
 ## Shape
 

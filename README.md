@@ -17,7 +17,9 @@ npm run sync                # pull the whole valorant-api.com catalog (~15 MB, ~
 npm run dev                 # http://localhost:3000
 ```
 
-`npm run sync` is version-gated: it records the upstream `manifestId` and skips if nothing changed. Use `--force` to re-run, or `--only=weapons,maps` for a subset. Re-run it after each Valorant patch.
+`npm run sync` is version-gated: it records the upstream `manifestId` and skips if nothing changed. Use `-- --force` to re-run, or `-- --only=weapons,maps` for a subset.
+
+To keep data fresh automatically, point a scheduler at `GET /api/sync` with the `SYNC_SECRET` bearer token — `vercel.json` already declares a 6-hourly cron. See [docs/DATA.md](./docs/DATA.md#keeping-it-fresh).
 
 ## Data
 
