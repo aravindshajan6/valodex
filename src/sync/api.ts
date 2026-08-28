@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any -- upstream records are intentionally loose; the DB `raw` column keeps them whole */
 /** Thin client for valorant-api.com. All list calls use `?language=all` so strings arrive as locale maps. */
 const BASE = process.env.VALORANT_API_BASE ?? "https://valorant-api.com/v1";
 

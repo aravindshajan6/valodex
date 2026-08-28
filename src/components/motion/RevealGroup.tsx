@@ -1,7 +1,7 @@
 "use client";
 
 import { animate, stagger } from "animejs";
-import { createElement, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 /**
  * Wrap any server-rendered markup. On mount (or when scrolled into view) every
@@ -68,11 +68,15 @@ export function RevealGroup({
           if (once) io.disconnect();
         }
       },
-      { threshold: 0.15 },
+      // threshold 0 + a small negative margin: fires as soon as any part is ~10% into the viewport,
+      // which also works for groups taller than the viewport (a ratio threshold never would).
+      { threshold: 0, rootMargin: "0px 0px -10% 0px" },
     );
     io.observe(root);
     return () => io.disconnect();
   }, [once, delay]);
 
-  return createElement(Tag, { ref, className }, children);
+  // Narrow to one intrinsic tag for typing; every allowed tag accepts the same props.
+  const El = Tag as "div";
+  return <El ref={ref as React.RefObject<HTMLDivElement>} className={className}>{children}</El>;
 }

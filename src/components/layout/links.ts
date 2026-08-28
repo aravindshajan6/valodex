@@ -6,5 +6,6 @@ export const NAV_LINKS = [
   { href: "/bundles", label: "Bundles" },
   { href: "/ranks", label: "Ranks" },
   { href: "/seasons", label: "Seasons" },
+  { href: "/gamemodes", label: "Modes" },
   { href: "/tools/ttk", label: "TTK" },
 ] as const;

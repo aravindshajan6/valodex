@@ -2,21 +2,18 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { NAV_LINKS } from "./links";
+
+function subscribeScroll(cb: () => void) {
+  window.addEventListener("scroll", cb, { passive: true });
+  return () => window.removeEventListener("scroll", cb);
+}
 
 export function Nav() {
   const pathname = usePathname();
-  const [scrolled, setScrolled] = useState(false);
+  const scrolled = useSyncExternalStore(subscribeScroll, () => window.scrollY > 24, () => false);
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-  useEffect(() => setOpen(false), [pathname]);
 
   return (
     <header
@@ -64,7 +61,7 @@ export function Nav() {
       {open && (
         <nav className="md:hidden border-t border-line bg-ink/95 px-4 py-3 flex flex-col">
           {NAV_LINKS.map((l) => (
-            <Link key={l.href} href={l.href} className="py-3 text-sm font-semibold uppercase tracking-[0.18em] text-bone-2 hover:text-bone">
+            <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className="py-3 text-sm font-semibold uppercase tracking-[0.18em] text-bone-2 hover:text-bone">
               {l.label}
             </Link>
           ))}

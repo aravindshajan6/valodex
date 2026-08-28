@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any -- upstream records are intentionally loose; the DB `raw` column keeps them whole */
 import "dotenv/config";
 import { sql } from "drizzle-orm";
 import { db } from "@/db/client";

@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Valorum
 
-## Getting Started
+A Valorant codex — agents, weapons, maps, skins, bundles, ranks, seasons and a time-to-kill calculator — built on live game data from [valorant-api.com](https://valorant-api.com), with Three.js scenes and anime.js motion throughout.
 
-First, run the development server:
+## Stack
+
+Next.js 16 (App Router) · React 19 · Tailwind v4 · Drizzle ORM · Postgres 16 · React Three Fiber + drei + postprocessing · anime.js v4
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env        # defaults point at the docker Postgres below
+npm install
+npm run db:up               # Postgres in docker (valorum/valorum @ localhost:5432)
+npm run db:push             # apply the Drizzle schema
+npm run sync                # pull the whole valorant-api.com catalog (~15 MB, ~10 s)
+npm run dev                 # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`npm run sync` is version-gated: it records the upstream `manifestId` and skips if nothing changed. Use `--force` to re-run, or `--only=weapons,maps` for a subset. Re-run it after each Valorant patch.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Data
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Everything human-readable is stored as a locale map (`{"en-US": "...", "ja-JP": "..."}`) via `?language=all`, so the whole site can be localized later without re-syncing. Every table keeps the untouched upstream record in a `raw` column. Media is hotlinked from `media.valorant-api.com`.
 
-## Learn More
+See [CLAUDE.md](./CLAUDE.md) for the design system, component conventions and the client-only 3D scene pattern.
 
-To learn more about Next.js, take a look at the following resources:
+## Disclaimer
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Valorum isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
