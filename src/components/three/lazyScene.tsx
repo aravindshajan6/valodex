@@ -8,7 +8,7 @@ import type { ComponentType } from "react";
  * inside server components, so each scene gets a sibling `Foo.lazy.tsx`:
  *
  *   "use client";
- *   import { lazyScene } from "@/components/three/Scene3D";
+ *   import { lazyScene } from "@/components/three/lazyScene";
  *   export default lazyScene(() => import("./FooScene"));
  *
  * Server pages then import and render the `.lazy` module. Nothing from three

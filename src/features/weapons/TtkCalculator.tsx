@@ -25,7 +25,7 @@ import RangeVisualizerScene from "./RangeVisualizerScene.lazy";
 import { Segmented } from "./Segmented";
 import { CATEGORY_LABELS, formatCredits, groupForBuyMenu } from "./shop";
 import type { WeaponSummary } from "./types";
-import { useReducedMotion, useWebGL } from "./useReducedMotion";
+import { useReducedMotion, useWebGL } from "@/hooks";
 
 const MAX_SELECTED = 4;
 const DEFAULT_SLUGS = ["vandal", "phantom"];
@@ -380,7 +380,7 @@ export function TtkCalculator({ weapons, initialSlugs }: { weapons: WeaponSummar
         </div>
         <div className="chamfer relative overflow-hidden border border-line bg-ink">
           <div className="relative h-[380px] sm:h-[460px]">
-            {webgl && focused && (
+            {focused && (
               <RangeVisualizerScene distance={distance} zones={zones} shots={focused.result.timeline.slice(0, 60)} sequence={sequence} reduced={reduced} />
             )}
             {webgl === false && (

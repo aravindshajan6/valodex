@@ -8,7 +8,7 @@ import { cn } from "@/lib/cn";
 import { damageRangeAt } from "@/lib/ttk";
 import { CATEGORY_LABELS, formatCredits } from "./shop";
 import type { WeaponSummary } from "./types";
-import { useReducedMotion } from "./useReducedMotion";
+import { useReducedMotion } from "@/hooks";
 
 type SortKey = "name" | "category" | "cost" | "fireRate" | "magazineSize" | "bodyDamage" | "headDamage" | "wallPenetration";
 type Column = { key: SortKey; label: string; numeric?: boolean; unit?: string; hint?: string };

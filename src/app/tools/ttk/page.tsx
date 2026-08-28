@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Container, PageHero } from "@/components/ui";
-import { TtkCalculator } from "@/components/weapons/TtkCalculator";
-import { toWeaponSummary } from "@/components/weapons/serialize";
+import { TtkCalculator } from "@/features/weapons/TtkCalculator";
+import { toWeaponSummary } from "@/features/weapons/serialize";
 import { listWeapons } from "@/lib/queries/weapons";
 
 export const revalidate = 3600;

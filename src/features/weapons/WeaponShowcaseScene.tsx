@@ -6,7 +6,7 @@ import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { Component, useRef, type ReactNode } from "react";
 import { AdditiveBlending, DoubleSide, SRGBColorSpace, TextureLoader, type Group } from "three";
 import { SceneCanvas } from "@/components/three/SceneCanvas";
-import { useReducedMotion } from "./useReducedMotion";
+import { useReducedMotion } from "@/hooks";
 
 export type WeaponShowcaseProps = {
   /** Transparent side-view PNG of the weapon. */

@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 import { type DamageRange, type HitLocation, HIT_LOCATIONS, rangeBreakpoints } from "@/lib/ttk";
 import { HIT_COLORS, HIT_LABELS } from "./hitColors";
-import { useReducedMotion } from "./useReducedMotion";
+import { useReducedMotion } from "@/hooks";
 
 const H = 320;
 const M = { top: 26, right: 78, bottom: 42, left: 48 };

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Container, PageHero, Stat } from "@/components/ui";
-import { WeaponsBrowser } from "@/components/weapons/WeaponsBrowser";
-import { toWeaponSummary } from "@/components/weapons/serialize";
+import { WeaponsBrowser } from "@/features/weapons/WeaponsBrowser";
+import { toWeaponSummary } from "@/features/weapons/serialize";
 import { countSkinsByWeapon, listWeapons } from "@/lib/queries/weapons";
 
 export const revalidate = 3600;

@@ -3,11 +3,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { RevealGroup } from "@/components/motion";
 import { Badge, Container, Panel, SectionHeading, Stat } from "@/components/ui";
-import { DamageFalloffChart } from "@/components/weapons/DamageFalloffChart";
-import { SkinGallery } from "@/components/weapons/SkinGallery";
-import { WeaponHeroVisual } from "@/components/weapons/WeaponHeroVisual";
-import { toSkinSummaries, toWeaponSummary } from "@/components/weapons/serialize";
-import { CATEGORY_LABELS, FEATURE_LABELS, formatCredits, pct } from "@/components/weapons/shop";
+import { DamageFalloffChart } from "@/features/weapons/DamageFalloffChart";
+import { SkinGallery } from "@/features/weapons/SkinGallery";
+import { WeaponHeroVisual } from "@/features/weapons/WeaponHeroVisual";
+import { toSkinSummaries, toWeaponSummary } from "@/features/weapons/serialize";
+import { CATEGORY_LABELS, FEATURE_LABELS, formatCredits, pct } from "@/features/weapons/shop";
 import { getWeaponBySlug, listWeaponSlugs } from "@/lib/queries/weapons";
 import { damageRangeAt } from "@/lib/ttk";
 

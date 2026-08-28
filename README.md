@@ -23,7 +23,7 @@ npm run dev                 # http://localhost:3000
 
 Everything human-readable is stored as a locale map (`{"en-US": "...", "ja-JP": "..."}`) via `?language=all`, so the whole site can be localized later without re-syncing. Every table keeps the untouched upstream record in a `raw` column. Media is hotlinked from `media.valorant-api.com`.
 
-See [CLAUDE.md](./CLAUDE.md) for the design system, component conventions and the client-only 3D scene pattern.
+See [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) for the directory layout and how the 3D layer is wired, [docs/DATA.md](./docs/DATA.md) for the API's shape and its quirks, and [CLAUDE.md](./CLAUDE.md) for the design-system conventions.
 
 ## Disclaimer
 
