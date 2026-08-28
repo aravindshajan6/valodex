@@ -1,22 +1,22 @@
 services:
   db:
     image: postgres:16-alpine
-    container_name: valorum-db
+    container_name: valodex-db
     restart: unless-stopped
     command: postgres -c max_connections=200
     environment:
-      POSTGRES_USER: valorum
-      POSTGRES_PASSWORD: valorum
-      POSTGRES_DB: valorum
+      POSTGRES_USER: valodex
+      POSTGRES_PASSWORD: valodex
+      POSTGRES_DB: valodex
     ports:
       - "5432:5432"
     volumes:
-      - valorum-pgdata:/var/lib/postgresql/data
+      - valodex-pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U valorum"]
+      test: ["CMD-SHELL", "pg_isready -U valodex"]
       interval: 5s
       timeout: 3s
       retries: 10
 
 volumes:
-  valorum-pgdata:
+  valodex-pgdata:
