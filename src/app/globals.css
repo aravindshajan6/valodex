@@ -1,26 +1,87 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ---- Valorum design tokens ------------------------------------------------
+   Palette is lifted from Valorant's own UI: near-black navy ground, bone-white
+   type, signal red for emphasis, with a cyan "holo" accent for 3D/tech UI. */
+@theme {
+  --color-ink: #0f1923;         /* page ground */
+  --color-ink-2: #131e2a;       /* raised surface */
+  --color-ink-3: #1b2836;       /* card / panel */
+  --color-line: #263544;        /* hairlines */
+  --color-bone: #ece8e1;        /* primary text */
+  --color-bone-2: #b9b4ab;      /* secondary text */
+  --color-mute: #768079;        /* tertiary text */
+  --color-red: #ff4655;         /* signal */
+  --color-red-2: #bd3944;       /* signal pressed */
+  --color-holo: #41e0c2;        /* cyan holo accent */
+  --color-gold: #f0c987;        /* rare / premium */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --font-display: var(--font-anton), "Anton", Impact, "Arial Narrow Bold", sans-serif;
+  --font-sans: var(--font-inter), Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, monospace;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --animate-scan: scan 6s linear infinite;
+  --animate-flicker: flicker 4s steps(1, end) infinite;
+  --animate-pulse-ring: pulse-ring 2.4s var(--ease-out-expo) infinite;
+
+  @keyframes scan {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(100vh); }
+  }
+  @keyframes flicker {
+    0%, 97%, 100% { opacity: 1; }
+    98% { opacity: 0.55; }
+    99% { opacity: 0.85; }
+  }
+  @keyframes pulse-ring {
+    0% { transform: scale(0.6); opacity: 0.9; }
+    100% { transform: scale(1.8); opacity: 0; }
   }
 }
 
+:root { color-scheme: dark; }
+
+html { scroll-behavior: smooth; }
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink);
+  color: var(--color-bone);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
+
+::selection { background: var(--color-red); color: var(--color-bone); }
+
+/* Subtle Valorant-style grid + vignette on the page ground. */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--color-line) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--color-line) 55%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+
+/* Angled corner cut used across cards/buttons — Valorant's signature chamfer. */
+.chamfer { clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px)); }
+.chamfer-sm { clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px)); }
+
+/* Display type: uppercase, tight, tall. */
+.display { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.01em; line-height: 0.92; }
+
+/* Elements animated in by anime.js start hidden; JS reveals them. Without JS they still render. */
+@media (scripting: enabled) {
+  [data-reveal] { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+}
+
+/* Thin custom scrollbar. */
+* { scrollbar-width: thin; scrollbar-color: var(--color-line) transparent; }
