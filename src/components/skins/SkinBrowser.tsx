@@ -7,11 +7,10 @@ import { cn } from "@/lib/cn";
 import { SkinCard, type SkinCardData } from "./SkinCard";
 import { WEAPON_CATEGORY_ORDER, type TierInfo } from "./tier";
 
-export type BrowserSkin = { uuid: string; name: string; slug: string; weapon: string; tier: string; hasIcon: boolean; hasVideo: boolean };
+export type BrowserSkin = { uuid: string; name: string; slug: string; weapon: string; tier: string; icon: string | null; hasVideo: boolean };
 export type WeaponOption = { slug: string; name: string; icon: string | null; category: string; count: number };
 
 const PAGE = 60;
-const MEDIA = "https://media.valorant-api.com";
 type Sort = "tier" | "name" | "weapon";
 
 export function SkinBrowser({ skins, tiers, weapons }: { skins: BrowserSkin[]; tiers: TierInfo[]; weapons: WeaponOption[] }) {
@@ -107,7 +106,7 @@ export function SkinBrowser({ skins, tiers, weapons }: { skins: BrowserSkin[]; t
     uuid: s.uuid,
     name: s.name,
     href: `/skins/${s.weapon}/${s.slug}`,
-    icon: s.hasIcon ? `${MEDIA}/weaponskins/${s.uuid}/displayicon.png` : null,
+    icon: s.icon,
     weaponName: weaponBySlug.get(s.weapon)?.name ?? s.weapon,
     tier: tierByName.get(s.tier) ?? null,
     hasVideo: s.hasVideo,

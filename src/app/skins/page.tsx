@@ -32,7 +32,7 @@ export default async function SkinsPage() {
     slug: r.slug,
     weapon: r.weaponSlug,
     tier: r.tier,
-    hasIcon: Boolean(r.hasIcon),
+    icon: r.icon ?? null,
     hasVideo: Boolean(r.hasVideo),
   }));
   const withVideo = skins.filter((s) => s.hasVideo).length;

@@ -9,13 +9,13 @@ import { SceneCanvas } from "@/components/three/SceneCanvas";
 import type { LadderTier } from "./types";
 
 /* ---- Layout constants -------------------------------------------------- */
-const RADIUS = 2.5;
-const STEP_Y = 0.3;
+const RADIUS = 3.4;
+const STEP_Y = 0.34;
 const STEP_A = 0.5;
 const INK = "#0f1923";
 const HOLO = "#41e0c2";
 const RED = "#ff4655";
-const HOME_POS = new THREE.Vector3(0, 1.4, 10);
+const HOME_POS = new THREE.Vector3(0, 1.6, 15.5);
 const HOME_LOOK = new THREE.Vector3(0, 0.2, 0);
 
 export type RankSceneProps = {
@@ -38,7 +38,7 @@ function useReducedMotion() {
 }
 
 /** Valorant's signature chamfer: only the top-right and bottom-left corners are cut. */
-function plateGeometry(size = 1.4, cut = 0.22, depth = 0.1) {
+function plateGeometry(size = 1.05, cut = 0.18, depth = 0.09) {
   const h = size / 2;
   const s = new THREE.Shape();
   s.moveTo(-h, -h + cut);
@@ -88,7 +88,7 @@ function Plate({
   const angle = index * STEP_A;
   const baseY = plateY(index, count);
   // Emissive climbs quadratically up the ladder so only the top tiers cross the bloom threshold.
-  const baseEmissive = 0.1 + 1.6 * t * t;
+  const baseEmissive = 0.08 + 0.75 * t * t;
   const color = useMemo(() => new THREE.Color(tier.color), [tier.color]);
 
   useFrame((state, dt) => {
@@ -101,7 +101,7 @@ function Plate({
     const bob = reduced ? 0 : Math.sin(state.clock.elapsedTime * 0.8 + index * 0.7) * 0.05;
     g.position.y = baseY + bob;
     if (material.current) {
-      const target = active ? baseEmissive + 1.1 : lit ? baseEmissive + 0.45 : baseEmissive;
+      const target = active ? baseEmissive + 0.6 : lit ? baseEmissive + 0.3 : baseEmissive;
       material.current.emissiveIntensity = THREE.MathUtils.damp(material.current.emissiveIntensity, target, k, d);
     }
     if (outline.current) outline.current.opacity = THREE.MathUtils.damp(outline.current.opacity, active ? 0.95 : lit ? 0.4 : 0, k, d);
@@ -167,7 +167,7 @@ function Helix({ tiers, activeIndex, hoveredIndex, onSelect, reduced }: RankScen
       const turns = Math.round((g.rotation.y - base) / (Math.PI * 2));
       g.rotation.y = THREE.MathUtils.damp(g.rotation.y, base + turns * Math.PI * 2, k, d);
       const y = plateY(activeIndex, tiers.length);
-      pos = tmpPos.current.set(0.55, y + 0.45, RADIUS + 3.1);
+      pos = tmpPos.current.set(0.55, y + 0.5, RADIUS + 4.6);
       lookAt = tmpLook.current.set(0, y, RADIUS * 0.7);
     }
 
@@ -257,9 +257,9 @@ function Embers({ count = 240, reduced }: { count?: number; reduced: boolean }) 
 export default function RankScene(props: RankSceneProps) {
   const reduced = useReducedMotion();
   return (
-    <SceneCanvas camera={{ position: HOME_POS.toArray(), fov: 38 }} onPointerMissed={() => props.onSelect(null)}>
+    <SceneCanvas camera={{ position: HOME_POS.toArray(), fov: 34 }} onPointerMissed={() => props.onSelect(null)}>
       <color attach="background" args={[INK]} />
-      <fog attach="fog" args={[INK, 9, 18]} />
+      <fog attach="fog" args={[INK, 14, 26]} />
       <ambientLight intensity={0.45} />
       <directionalLight position={[4, 8, 6]} intensity={1.8} />
       <pointLight position={[-5, -3, 4]} intensity={40} color={RED} distance={16} />
@@ -267,7 +267,7 @@ export default function RankScene(props: RankSceneProps) {
       <Helix {...props} reduced={reduced} />
       <Embers reduced={reduced} />
       <EffectComposer>
-        <Bloom luminanceThreshold={0.6} luminanceSmoothing={0.3} mipmapBlur intensity={1.1} />
+        <Bloom luminanceThreshold={0.72} luminanceSmoothing={0.25} mipmapBlur intensity={0.7} />
       </EffectComposer>
     </SceneCanvas>
   );

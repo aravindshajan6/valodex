@@ -22,7 +22,10 @@ export async function listBrowsableSkins() {
       uuid: weaponSkins.uuid,
       slug: weaponSkins.slug,
       displayName: weaponSkins.displayName,
-      hasIcon: sql<boolean>`${weaponSkins.displayIcon} is not null`,
+      // A few skins ship without a top-level render; fall back to the first chroma's, then the first level's.
+      icon: sql<string | null>`coalesce(${weaponSkins.displayIcon},
+        (select c.display_icon from weapon_skin_chromas c where c.skin_uuid = ${weaponSkins.uuid} and c.display_icon is not null order by c."order" limit 1),
+        (select l.display_icon from weapon_skin_levels l where l.skin_uuid = ${weaponSkins.uuid} and l.display_icon is not null order by l."order" limit 1))`,
       weaponSlug: weapons.slug,
       tier: contentTiers.devName,
       tierRank: contentTiers.rank,

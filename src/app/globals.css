@@ -73,9 +73,11 @@ body {
 /* Display type: uppercase, tight, tall. */
 .display { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.01em; line-height: 0.92; }
 
-/* Elements animated in by anime.js start hidden; JS reveals them. Without JS they still render. */
+/* Elements animated in by anime.js start hidden; <RevealGroup> reveals them.
+   Scoped to [data-reveal-root] so a stray data-reveal outside a group still renders
+   (it just doesn't animate) instead of staying invisible forever. */
 @media (scripting: enabled) {
-  [data-reveal] { opacity: 0; }
+  [data-reveal-root] [data-reveal] { opacity: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -49,13 +49,13 @@ function Weapon({ url, reduced }: { url: string; reduced: boolean }) {
         <meshBasicMaterial map={texture} map-colorSpace={SRGBColorSpace} transparent alphaTest={0.04} side={DoubleSide} toneMapped={false} />
       </mesh>
       {/* Rim ghosts: the same silhouette, tinted and offset, additively blended. */}
-      <mesh position={[-0.14, 0.07, -0.05]} scale={1.035}>
+      <mesh position={[-0.035, 0.018, -0.05]} scale={1.01}>
         <planeGeometry args={[w, h]} />
-        <meshBasicMaterial map={texture} color="#ff4655" transparent opacity={0.6} blending={AdditiveBlending} depthWrite={false} side={DoubleSide} toneMapped={false} />
+        <meshBasicMaterial map={texture} color="#ff4655" transparent opacity={0.28} blending={AdditiveBlending} depthWrite={false} side={DoubleSide} toneMapped={false} />
       </mesh>
-      <mesh position={[0.16, -0.06, -0.06]} scale={1.035}>
+      <mesh position={[0.04, -0.016, -0.06]} scale={1.01}>
         <planeGeometry args={[w, h]} />
-        <meshBasicMaterial map={texture} color="#41e0c2" transparent opacity={0.5} blending={AdditiveBlending} depthWrite={false} side={DoubleSide} toneMapped={false} />
+        <meshBasicMaterial map={texture} color="#41e0c2" transparent opacity={0.22} blending={AdditiveBlending} depthWrite={false} side={DoubleSide} toneMapped={false} />
       </mesh>
     </group>
   );

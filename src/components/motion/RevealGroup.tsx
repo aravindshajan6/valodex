@@ -78,5 +78,9 @@ export function RevealGroup({
 
   // Narrow to one intrinsic tag for typing; every allowed tag accepts the same props.
   const El = Tag as "div";
-  return <El ref={ref as React.RefObject<HTMLDivElement>} className={className}>{children}</El>;
+  return (
+    <El ref={ref as React.RefObject<HTMLDivElement>} data-reveal-root="" className={className}>
+      {children}
+    </El>
+  );
 }
