@@ -1,5 +1,5 @@
 export const SITE = {
-  name: "Valorum",
+  name: "Valodex",
   description: "The Valorant codex: agents, weapons, maps, skins, ranks and tools — built on live game data.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   source: { label: "valorant-api.com", href: "https://valorant-api.com" },

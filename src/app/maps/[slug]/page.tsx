@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   return {
     title: name,
     description,
-    openGraph: { title: `${name} — Valorum`, description, images: map.splash ? [{ url: map.splash }] : undefined },
+    openGraph: { title: `${name} — Valodex`, description, images: map.splash ? [{ url: map.splash }] : undefined },
   };
 }
 

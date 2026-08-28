@@ -1,4 +1,4 @@
-# Valorum — project conventions
+# Valodex — project conventions
 
 Valorant codex built on live game data from valorant-api.com. Next.js 16 (App Router, React 19), Tailwind v4, Drizzle + Postgres, React Three Fiber (three) + drei + postprocessing for 3D, anime.js v4 for DOM motion.
 

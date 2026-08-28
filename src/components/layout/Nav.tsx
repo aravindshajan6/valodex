@@ -23,7 +23,7 @@ export function Nav() {
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
         <Link href="/" className="display text-2xl tracking-wider text-bone hover:text-red transition-colors">
-          Valo<span className="text-red">rum</span>
+          Valo<span className="text-red">dex</span>
         </Link>
         <nav className="hidden md:flex items-center gap-1">
           {NAV_LINKS.map((l) => {

@@ -1,4 +1,4 @@
-# Valorum
+# Valodex
 
 A Valorant codex — agents, weapons, maps, skins, bundles, ranks, seasons and a time-to-kill calculator — built on live game data from [valorant-api.com](https://valorant-api.com), with Three.js scenes and anime.js motion throughout.
 
@@ -11,7 +11,7 @@ Next.js 16 (App Router) · React 19 · Tailwind v4 · Drizzle ORM · Postgres 16
 ```bash
 cp .env.example .env        # defaults point at the docker Postgres below
 npm install
-npm run db:up               # Postgres in docker (valorum/valorum @ localhost:5432)
+npm run db:up               # Postgres in docker (valodex/valodex @ localhost:5432)
 npm run db:push             # apply the Drizzle schema
 npm run sync                # pull the whole valorant-api.com catalog (~15 MB, ~10 s)
 npm run dev                 # http://localhost:3000
@@ -29,4 +29,4 @@ See [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) for the directory layout and 
 
 ## Disclaimer
 
-Valorum isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
+Valodex isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games and all associated properties are trademarks or registered trademarks of Riot Games, Inc.

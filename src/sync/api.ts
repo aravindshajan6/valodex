@@ -10,7 +10,7 @@ async function get<T>(path: string, params: Record<string, string> = {}): Promis
   let lastErr: unknown;
   for (let attempt = 1; attempt <= 3; attempt++) {
     try {
-      const res = await fetch(url, { headers: { "user-agent": "valorum-sync/0.1" } });
+      const res = await fetch(url, { headers: { "user-agent": "valodex-sync/0.1" } });
       const body = (await res.json()) as Envelope<T>;
       if (!res.ok || body.status !== 200) throw new Error(`${path}: HTTP ${res.status} ${body.error ?? ""}`.trim());
       return body.data;

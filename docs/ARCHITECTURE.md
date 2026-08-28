@@ -3,7 +3,7 @@
 ## Directory map
 
 ```
-valorum/
+valodex/
 ├── docs/                    ARCHITECTURE.md (this file), DATA.md
 ├── drizzle/                 generated SQL migrations
 ├── public/

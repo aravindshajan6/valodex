@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* ---- Valorum design tokens ------------------------------------------------
+/* ---- Valodex design tokens ------------------------------------------------
    Palette is lifted from Valorant's own UI: near-black navy ground, bone-white
    type, signal red for emphasis, with a cyan "holo" accent for 3D/tech UI. */
 @theme {

@@ -45,7 +45,7 @@ export default async function BundlesPage() {
             Store <span className="text-red">Bundles</span>
           </>
         }
-        description="The API ships bundles without an item list, so Valorum rebuilds each one from its theme: every skin, player card, spray and buddy that shares it."
+        description="The API ships bundles without an item list, so Valodex rebuilds each one from its theme: every skin, player card, spray and buddy that shares it."
       >
         <div className="flex flex-wrap gap-x-12 gap-y-6">
           <div data-reveal><Stat label="Bundles" value={bundles.length} /></div>
