@@ -21,6 +21,7 @@ export default async function AgentsPage() {
   const [agents, roles] = await Promise.all([listPlayableAgents(), listAgentRoles()]);
 
   const cards: AgentCardData[] = agents.map((a) => ({
+    uuid: a.uuid,
     slug: a.slug,
     name: t(a.displayName),
     developerName: a.developerName,

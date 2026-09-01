@@ -3,6 +3,7 @@
 export type RoleOption = { uuid: string; name: string; icon: string | null };
 
 export type AgentCardData = {
+  uuid: string;
   slug: string;
   name: string;
   developerName: string | null;

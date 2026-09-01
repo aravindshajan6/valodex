@@ -4,3 +4,4 @@ export { Badge } from "./Badge";
 export { Panel } from "./Panel";
 export { Stat } from "./Stat";
 export { PageHero } from "./PageHero";
+export { FavouriteButton } from "./FavouriteButton";

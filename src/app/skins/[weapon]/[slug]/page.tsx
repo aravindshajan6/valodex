@@ -7,7 +7,7 @@ import { SkinCard, type SkinCardData } from "@/features/skins/SkinCard";
 import { SkinLevels, type ShowcaseLevel } from "@/features/skins/SkinLevels";
 import { SkinShowcase, type ShowcaseChroma } from "@/features/skins/SkinShowcase";
 import { hexColor, oneLine, type TierInfo } from "@/features/skins/tier";
-import { Badge, Container, SectionHeading } from "@/components/ui";
+import { Badge, Container, FavouriteButton, SectionHeading } from "@/components/ui";
 import { t } from "@/lib/i18n";
 import { findBundleForTheme, getSkinByWeaponAndSlug, listSkinsByThemes } from "@/lib/queries/skins";
 
@@ -99,10 +99,11 @@ export default async function SkinPage({ params }: { params: Params }) {
               {levels.length > 1 ? ` and ${levels.length} upgrade levels` : ""}.
               {videoCount ? ` ${videoCount} level${videoCount === 1 ? " has" : "s have"} in-game preview video.` : ""}
             </p>
-            <div data-reveal className="mt-6 flex flex-wrap gap-2">
+            <div data-reveal className="mt-6 flex flex-wrap items-center gap-2">
               {tier && <Badge tone={tier.devName === "Ultra" || tier.devName === "Exclusive" ? "gold" : tier.devName === "Premium" ? "red" : "holo"}>{tier.devName} edition</Badge>}
               <Badge>{skin.weapon.category}</Badge>
               {videoCount > 0 && <Badge tone="holo">Video</Badge>}
+              <FavouriteButton kind="skins" id={skin.uuid} name={name} variant="pill" className="ml-2" />
             </div>
           </RevealGroup>
 

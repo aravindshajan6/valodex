@@ -17,9 +17,9 @@ valodex/
 │   ├── config/              site.ts — name, description, base URL, nav links
 │   ├── db/                  client.ts + schema/ (one file per domain)
 │   ├── features/            domain UI, one folder per section of the site
-│   │   ├── agents/ bundles/ gamemodes/ home/ maps/
-│   │   └── ranks/ seasons/ skins/ weapons/
-│   ├── hooks/               useMediaQuery, useReducedMotion, useWebGL, useInView
+│   │   ├── agents/ bundles/ favourites/ gamemodes/ home/
+│   │   └── maps/ ranks/ seasons/ skins/ weapons/
+│   ├── hooks/               useMediaQuery, useReducedMotion, useWebGL, useInView, useFavourites
 │   ├── lib/                 pure helpers: cn, color, i18n, minimap, slug, ttk
 │   │   └── queries/         all database reads, one file per domain
 │   └── sync/                valorant-api.com → Postgres importer
@@ -62,6 +62,16 @@ never renders the scene. Layer a DOM fallback *under* the canvas instead of gati
 Wrap server markup in `<RevealGroup>`; descendants marked `data-reveal` stagger in and
 `data-count="123"` counts up. The hide-until-revealed CSS is scoped to `[data-reveal-root]`,
 so a `data-reveal` outside a group renders normally instead of staying invisible.
+
+## Favourites
+
+There are no accounts, so favourites live in `localStorage` (`valodex:favourites`, three UUID
+lists keyed `agents` / `weapons` / `skins`). `useFavourites` wraps it in `useSyncExternalStore`:
+the server and hydration pass always see an empty list, and `hydrated` flips once the real
+value is available — render the empty state only after that. `FavouriteButton` is a sibling of a
+card's link, never a child, so the card stays one valid anchor. `/favourites` ships compact
+catalogues and resolves the stored UUIDs client-side; `?a=<agent slugs>&w=<weapon slugs>&s=<skin uuids>`
+is a read-only shared view with a "save to mine" merge.
 
 ## Localisation
 

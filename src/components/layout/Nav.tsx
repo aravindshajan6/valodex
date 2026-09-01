@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useSyncExternalStore } from "react";
 import { NAV_LINKS } from "@/config/site";
+import { FavouritesNavLink } from "./FavouritesNavLink";
 
 function subscribeScroll(cb: () => void) {
   window.addEventListener("scroll", cb, { passive: true });
@@ -45,6 +46,7 @@ export function Nav() {
               </Link>
             );
           })}
+          <FavouritesNavLink active={pathname.startsWith("/favourites")} />
         </nav>
         <button
           onClick={() => setOpen((o) => !o)}
@@ -65,6 +67,7 @@ export function Nav() {
               {l.label}
             </Link>
           ))}
+          <FavouritesNavLink mobile active={pathname.startsWith("/favourites")} onClick={() => setOpen(false)} />
         </nav>
       )}
     </header>

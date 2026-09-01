@@ -3,10 +3,11 @@
 import Image from "next/image";
 import { createTimeline, stagger } from "animejs";
 import { useEffect, useRef } from "react";
-import { Badge, Panel } from "@/components/ui";
+import { Badge, FavouriteButton, Panel } from "@/components/ui";
 import { roleTone } from "./types";
 
 type Props = {
+  uuid: string;
   name: string;
   eyebrow: string;
   description: string;
@@ -22,7 +23,7 @@ type Props = {
  * marked `data-reveal` so CSS hides them until the timeline runs (and shows them
  * instantly for reduced-motion users).
  */
-export function AgentTitle({ name, eyebrow, description, role, tags, releaseYear, abilityCount }: Props) {
+export function AgentTitle({ uuid, name, eyebrow, description, role, tags, releaseYear, abilityCount }: Props) {
   const root = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -86,6 +87,10 @@ export function AgentTitle({ name, eyebrow, description, role, tags, releaseYear
       <p data-line data-reveal className="max-w-xl text-base leading-relaxed text-bone-2 sm:text-lg">
         {description}
       </p>
+
+      <div data-line data-reveal>
+        <FavouriteButton kind="agents" id={uuid} name={name} variant="pill" />
+      </div>
 
       {tags.length > 0 && (
         <div data-line data-reveal className="flex flex-wrap gap-2">

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { RevealGroup } from "@/components/motion";
-import { Badge, Container, Panel, SectionHeading, Stat } from "@/components/ui";
+import { Badge, Container, FavouriteButton, Panel, SectionHeading, Stat } from "@/components/ui";
 import { DamageFalloffChart } from "@/features/weapons/DamageFalloffChart";
 import { SkinGallery } from "@/features/weapons/SkinGallery";
 import { WeaponHeroVisual } from "@/features/weapons/WeaponHeroVisual";
@@ -65,6 +65,7 @@ export default async function WeaponPage({ params }: Params) {
               {w.fireMode && <Badge>{humanize(w.fireMode)}</Badge>}
               {w.altFireType && <Badge>Alt: {humanize(w.altFireType)}</Badge>}
               {w.wallPenetration && <Badge tone={w.wallPenetration === "high" ? "gold" : "neutral"}>Wall pen {w.wallPenetration}</Badge>}
+              <FavouriteButton kind="weapons" id={w.uuid} name={w.name} variant="pill" className="ml-2" />
             </div>
             <div data-reveal className="pointer-events-auto mt-8 flex flex-wrap items-end gap-x-10 gap-y-4">
               <div className="flex flex-col gap-1">

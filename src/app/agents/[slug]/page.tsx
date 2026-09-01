@@ -75,6 +75,7 @@ export default async function AgentPage({ params }: { params: Promise<{ slug: st
           <div className="grid items-center gap-12 pb-20 lg:grid-cols-[minmax(0,11fr)_minmax(0,9fr)] lg:gap-8 lg:pb-28">
             <div className="order-2 lg:order-1">
               <AgentTitle
+                uuid={agent.uuid}
                 name={name}
                 eyebrow={eyebrow || "Agent"}
                 description={t(agent.description)}
