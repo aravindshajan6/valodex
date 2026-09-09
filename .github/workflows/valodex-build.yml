@@ -31,7 +31,7 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: "22" }
       - run: npm ci
-      - run: npm run db:push          # create schema in the throwaway DB
+      - run: npx drizzle-kit push --config=drizzle.ci.config.ts
       - run: npm run sync             # populate from valorant-api.com
       - uses: docker/login-action@v3
         with:
