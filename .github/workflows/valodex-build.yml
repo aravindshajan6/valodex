@@ -1,7 +1,6 @@
 # Commit to the valodex repo as: .github/workflows/valodex-build.yml
-# Builds the image and pushes to GHCR on every push to main.
-# NOTE: valodex prerenders pages from the DB at build time, so CI spins up a
-# throwaway Postgres, applies the schema, and runs the sync before building.
+# Builds Next on the runner (with a throwaway seeded Postgres) then packages the
+# standalone output into a runtime image and pushes it to GHCR.
 name: valodex build & push
 on:
   push:
@@ -26,13 +25,16 @@ jobs:
           --health-interval 5s --health-timeout 5s --health-retries 15
     env:
       DATABASE_URL: postgres://valodex:valodex@localhost:5432/valodex
+      NEXT_PUBLIC_SITE_URL: https://valodex.sapper.top
+      NEXT_PUBLIC_GA_ID: ${{ vars.NEXT_PUBLIC_GA_ID }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: "22" }
       - run: npm ci
       - run: npx drizzle-kit push --config=drizzle.ci.config.ts
-      - run: npm run sync             # populate from valorant-api.com
+      - run: npm run sync
+      - run: npm run build
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
@@ -49,10 +51,5 @@ jobs:
       - uses: docker/build-push-action@v6
         with:
           context: .
-          network: host                # so the build can reach the Postgres service
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          build-args: |
-            DATABASE_URL=postgres://valodex:valodex@localhost:5432/valodex
-            NEXT_PUBLIC_SITE_URL=https://valodex.sapper.top
-            NEXT_PUBLIC_GA_ID=${{ vars.NEXT_PUBLIC_GA_ID }}
